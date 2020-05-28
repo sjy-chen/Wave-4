@@ -1,22 +1,31 @@
 # defining pig_latin function
-def pig_latin(input_word):
+def pig_latin(input_phrase):
+    #separating into separate words
+    input_phrase = input_phrase.split()
     
-    #checking if word starts with a consonant
-    if input_word[0] != "a" and input_word[0] != "e" and input_word[0] != "i" and input_word[0] != "o" and input_word[0] != "u":
+    #defining vowels
+    vowels = ["a", "e", "i", "o", "u"]
+
+    #translating to pig latin word by word
+    for k in range(len(input_phrase)):
+        i = input_phrase[k]
         
-        #finding all consonants until first vowel and translating word to pig latin through concantenation
-        for i in range(1, len(input_word)):
-            if input_word[i] == "a" or input_word[i] == "e" or input_word[i] == "i" or input_word[i] == "o" or input_word[i] == "u":
-                translation = input_word[i:len(input_word)] + input_word[:i]+ "ay"
-                break
-    
-    #cases for when word starts with vowel
-    else:
-        translation = input_word + "way"
-    return translation
+        #cases starting with consonants
+        if i[0] not in vowels:
+            for p in range(1, len(i)):
+                if i[p] in vowels:
+                    input_phrase[k] = i[p:len(i)] + i[:p]+ "ay"
+                    break
+        
+        #cases starting with vowels
+        else:
+            input_phrase[k] = i + "way"
+
+    #concatenation        
+    return " ".join(input_phrase)
 
 #receiving input from user
-input_word = str(input("Please enter a word to be translated to pig latin: "))
+input_phrase = str(input("Please enter a phrase to be translated to pig latin: "))
 
 #final result
-print(pig_latin(input_word))
+print(pig_latin(input_phrase))
